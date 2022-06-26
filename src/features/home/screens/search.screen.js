@@ -5,10 +5,11 @@ import { Header } from "../components/home.styles";
 import { Pressable, ScrollView, View } from "react-native";
 import { Spacer } from "../../../components/spacer";
 import { Card } from "react-native-paper";
-import { FlatList } from "react-native";
+import {GOOGLE_API_KEY} from '@env'
 import styled from "styled-components";
 import notAvailable from "../../../utility/404.jpg";
 export const LibraryCard = styled(Card)`
+
 margin-left:10px;
 border-radius:5px;
 margin-bottom:5px
@@ -24,13 +25,14 @@ export const LibraryContent = styled(Card.Content)`
 
 export default function SearchScreen({ route, navigation }) {
   const [books, setBooks] = useState(null);
+  console.log(route)
   const search = route.params.search;
   const [bookError, setBookError] = useState(null);
 
   useEffect(() => {
     setTimeout(() => {
       setBookError(
-        "Book details not available, please use a valid keyword and try again"
+        "Book not found, please use a valid keyword and try again"
       );
     }, 2800);
   }, []);
@@ -48,7 +50,7 @@ export default function SearchScreen({ route, navigation }) {
           : ""
       }
       ${search.selectedCriteria === "isbn" ? `isbn:${search.searchQuery}&` : ""}
-      key=AIzaSyAEouWmq0I8lv4b3qKOqjjvO9xfE-SVEo0`
+      key=${GOOGLE_API_KEY}`
     )
       .then((res) => res.json())
       .then((res) => {

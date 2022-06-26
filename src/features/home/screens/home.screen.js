@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeArea } from "../../../utility/safe-area";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { Text } from "../../../components/text";
 import { Spacer } from "../../../components/spacer";
 import { Picker } from "@react-native-picker/picker";
 import { ActivityIndicator } from "react-native-paper";
+import {NYTIMES_API_KEY} from '@env'
 import {
   ScrollView,
   View,
@@ -12,7 +13,7 @@ import {
   FlatList,
   Dimensions,
 } from "react-native";
-import { Card, Button, Searchbar } from "react-native-paper";
+import { Card, Button } from "react-native-paper";
 import {
   BellIcon,
   BookCard,
@@ -26,21 +27,17 @@ import {
   LibraryCard,
   LibraryContent,
   MenuIcon,
-  ReadingCard,
-  ReadingImage,
-  ReadingTitle,
-  TextOffset,
 } from "../components/home.styles";
 
 export default function HomeScreen({ navigation }) {
-  const [selectedCriteria, setSelectedCriteria] = useState();
+  const [selectedCriteria, setSelectedCriteria] = useState("title");
   const [fictionList, setFictionList] = useState();
   const [nonFictionList, setNonFictionList] = useState();
   const [listLoaded, setLoaded] = useState(false);
 
   useEffect(() => {
     fetch(
-      `https://api.nytimes.com/svc/books/v3/lists/current/combined-print-and-e-book-fiction.json?api-key=b7cf4qvwxStkd2vvEFANyV43AsyJAjGA`
+      `https://api.nytimes.com/svc/books/v3/lists/current/combined-print-and-e-book-fiction.json?api-key=${NYTIMES_API_KEY}`
     )
       .then((res) => res.json())
       .then((res) => {
@@ -48,7 +45,7 @@ export default function HomeScreen({ navigation }) {
       })
       .catch(console.error);
     fetch(
-      `https://api.nytimes.com/svc/books/v3/lists/current/combined-print-and-e-book-nonfiction.json?api-key=b7cf4qvwxStkd2vvEFANyV43AsyJAjGA`
+      `https://api.nytimes.com/svc/books/v3/lists/current/combined-print-and-e-book-nonfiction.json?api-key=${NYTIMES_API_KEY}`
     )
       .then((res) => res.json())
       .then((res) => {

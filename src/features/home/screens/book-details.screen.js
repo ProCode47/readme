@@ -7,6 +7,8 @@ import { Ionicons } from "@expo/vector-icons";
 import notAvailable from "../../../utility/404.jpg";
 import * as Linking from 'expo-linking';
 import { ActivityIndicator } from 'react-native-paper';
+import {GOOGLE_API_KEY} from '@env'
+
 
 import {
   Header,
@@ -86,7 +88,7 @@ export default function BookDetails({ route, navigation }) {
     // console.log(route.params.isbn);
     const isbn = route.params.isbn;
     fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=AIzaSyAEouWmq0I8lv4b3qKOqjjvO9xfE-SVEo0`
+      `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=${GOOGLE_API_KEY}`
     )
       .then((res) => res.json())
       .then((res) => {
