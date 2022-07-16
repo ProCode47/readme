@@ -8,13 +8,17 @@ import { Card } from "react-native-paper";
 import {GOOGLE_API_KEY} from '@env'
 import styled from "styled-components";
 import notAvailable from "../../../utility/404.jpg";
+import { Dimensions } from "react-native";
+const DEVICE_WIDTH = Dimensions.get("window").width;
+const CARD_WIDTH = DEVICE_WIDTH / 2.2
+
 export const LibraryCard = styled(Card)`
 
 margin-left:10px;
 border-radius:5px;
 margin-bottom:5px
 margin-top: 10px
-width:160px;
+width: ${CARD_WIDTH}px;
 
 
 `;
@@ -25,7 +29,6 @@ export const LibraryContent = styled(Card.Content)`
 
 export default function SearchScreen({ route, navigation }) {
   const [books, setBooks] = useState(null);
-  console.log(route)
   const search = route.params.search;
   const [bookError, setBookError] = useState(null);
 

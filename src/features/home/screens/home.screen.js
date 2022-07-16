@@ -34,6 +34,15 @@ export default function HomeScreen({ navigation }) {
   const [fictionList, setFictionList] = useState();
   const [nonFictionList, setNonFictionList] = useState();
   const [listLoaded, setLoaded] = useState(false);
+  const [bookError, setBookError] = useState(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setBookError(
+        "Network status is poor or it seems you're offline"
+      );
+    }, 8000);
+  }, []);
 
   useEffect(() => {
     fetch(
@@ -104,7 +113,7 @@ export default function HomeScreen({ navigation }) {
               alignItems: "center",
             }}
           >
-            <ActivityIndicator animating={true} size={50} color="#7D4A4A" />
+           {bookError ? <Text>{bookError}</Text> : <ActivityIndicator animating={true} size={50} color="#7D4A4A" />}
           </View>
         )}
 
