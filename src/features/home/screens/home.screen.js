@@ -33,7 +33,6 @@ export default function HomeScreen({ navigation }) {
   const [selectedCriteria, setSelectedCriteria] = useState("title");
   const [fictionList, setFictionList] = useState();
   const [nonFictionList, setNonFictionList] = useState();
-  const [listLoaded, setLoaded] = useState(false);
   const [bookError, setBookError] = useState(null);
 
   useEffect(() => {
@@ -64,7 +63,7 @@ export default function HomeScreen({ navigation }) {
   }, []);
   const [searchQuery, setSearchQuery] = useState("");
   const onChangeSearch = (query) => setSearchQuery(query);
-
+ 
   return (
     <SafeArea>
       {/* Header Section */}
@@ -105,7 +104,7 @@ export default function HomeScreen({ navigation }) {
             <Picker.Item label="Author" value="author" />
           </Picker>
         </View>
-        {!listLoaded && (
+        {!fictionList && (
           <View
             style={{
               height: 500,
@@ -191,7 +190,6 @@ export default function HomeScreen({ navigation }) {
                 renderItem={({ item }) => {
                   return (
                     <Pressable
-                      onLayout={setLoaded(true)} //experimental
                       onPress={() =>
                         navigation.navigate("Books", {
                           isbn: item.primary_isbn13,

@@ -92,7 +92,7 @@ export default function BookDetails({ route, navigation }) {
     )
       .then((res) => res.json())
       .then((res) => {
-        console.log(res.items[0]);
+        // console.log(res.items[0]);
         setBook(res.items[0]);
       })
       .catch(console.error);
