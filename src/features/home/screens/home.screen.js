@@ -41,7 +41,7 @@ export default function HomeScreen({ navigation }) {
       setBookError(
         "Network status is poor or it seems you're offline"
       );
-    }, 8000);
+    }, 9500);
   }, []);
 
   useEffect(() => {
