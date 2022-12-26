@@ -7,7 +7,9 @@ import { Ionicons } from "@expo/vector-icons";
 import notAvailable from "../../../utility/404.jpg";
 import * as Linking from 'expo-linking';
 import { ActivityIndicator } from 'react-native-paper';
-import {GOOGLE_API_KEY} from '@env'
+import { GOOGLE_API_KEY } from '@env'
+import NetInfo from '@react-native-community/netinfo';
+
 
 
 import {
@@ -75,12 +77,19 @@ const Action = styled.View`
 
 export default function BookDetails({ route, navigation }) {
   const [book, setBook] = useState(null);
-  const [bookError, setBookError] = useState(null);
+  const [NetworkError, setNetworkError] = useState(true);
+  const NETWORK_ERROR_MESSSAGE = "Oops... it seems you are offline"
+
   
   useEffect(() => {
-    setTimeout(() => {
-      setBookError("Book details not available")
-    },3000)
+    const netSubscribe = NetInfo.addEventListener(state => {
+      console.log('Connection type', state.type);
+      console.log('Is connected?', state.isConnected);
+      setNetworkError(state.isInternetReachable)
+    });
+    
+    // To subscribe to these update, just use:
+    netSubscribe();
   },[])
   
 
@@ -104,7 +113,9 @@ export default function BookDetails({ route, navigation }) {
         <BackIcon onPress={() => navigation.goBack()} />
         <FavouriteIcon />
       </Header>
-      {!book && <View style={{height:500,justifyContent:"center",alignItems:"center"}}><ActivityIndicator animating={true} size={50} color="#7D4A4A" /></View>}
+      {!book && <View style={{ height: 500, justifyContent: "center", alignItems: "center" }}>
+      {NetworkError ? <ActivityIndicator animating={true} size={50} color="#7D4A4A" />: <Text>{NETWORK_ERROR_MESSSAGE}</Text>}
+      </View>}
       {book && (
         <ScrollView>
           <Spacer size="large" />
@@ -185,7 +196,6 @@ export default function BookDetails({ route, navigation }) {
           </View>
         </ScrollView>
       )}
-      { !book && <Text> {bookError} </Text>}
     </SafeArea>
   );
 }

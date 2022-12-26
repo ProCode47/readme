@@ -28,19 +28,25 @@ import {
   LibraryContent,
   MenuIcon,
 } from "../components/home.styles";
+import NetInfo from '@react-native-community/netinfo';
 
 export default function HomeScreen({ navigation }) {
   const [selectedCriteria, setSelectedCriteria] = useState("title");
   const [fictionList, setFictionList] = useState();
   const [nonFictionList, setNonFictionList] = useState();
-  const [bookError, setBookError] = useState(null);
+  const [NetworkError, setNetworkError] = useState(true);
+  const NETWORK_ERROR_MESSSAGE = "Oops... it seems you are offline"
+
 
   useEffect(() => {
-    setTimeout(() => {
-      setBookError(
-        "Network status is poor or it seems you're offline"
-      );
-    }, 9500);
+    const netSubscribe = NetInfo.addEventListener(state => {
+      console.log('Connection type', state.type);
+      console.log('Is connected?', state.isConnected);
+      setNetworkError(state.isInternetReachable)
+    });
+    
+    // To subscribe to these update, just use:
+    netSubscribe();
   }, []);
 
   useEffect(() => {
@@ -112,7 +118,7 @@ export default function HomeScreen({ navigation }) {
               alignItems: "center",
             }}
           >
-           {bookError ? <Text>{bookError}</Text> : <ActivityIndicator animating={true} size={50} color="#7D4A4A" />}
+           {NetworkError ? <ActivityIndicator animating={true} size={50} color="#7D4A4A" />: <Text>{NETWORK_ERROR_MESSSAGE}</Text>}
           </View>
         )}
 
