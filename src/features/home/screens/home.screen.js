@@ -51,7 +51,12 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     fetch(
-      `https://api.nytimes.com/svc/books/v3/lists/current/combined-print-and-e-book-fiction.json?api-key=${NYTIMES_API_KEY}`
+      `https://api.nytimes.com/svc/books/v3/lists/current/combined-print-and-e-book-fiction.json?api-key=${NYTIMES_API_KEY}` , {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
     )
       .then((res) => res.json())
       .then((res) => {
@@ -59,7 +64,12 @@ export default function HomeScreen({ navigation }) {
       })
       .catch(console.error);
     fetch(
-      `https://api.nytimes.com/svc/books/v3/lists/current/combined-print-and-e-book-nonfiction.json?api-key=${NYTIMES_API_KEY}`
+      `https://api.nytimes.com/svc/books/v3/lists/current/combined-print-and-e-book-nonfiction.json?api-key=${NYTIMES_API_KEY}` , {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
     )
       .then((res) => res.json())
       .then((res) => {

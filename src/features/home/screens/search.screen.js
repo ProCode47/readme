@@ -5,12 +5,12 @@ import { Header } from "../components/home.styles";
 import { Pressable, ScrollView, View } from "react-native";
 import { Spacer } from "../../../components/spacer";
 import { Card } from "react-native-paper";
-import {GOOGLE_API_KEY} from '@env'
+import { GOOGLE_API_KEY } from "@env";
 import styled from "styled-components";
 import notAvailable from "../../../utility/404.jpg";
 import { Dimensions } from "react-native";
 const DEVICE_WIDTH = Dimensions.get("window").width;
-const CARD_WIDTH = DEVICE_WIDTH / 2.2
+const CARD_WIDTH = DEVICE_WIDTH / 2.2;
 
 export const LibraryCard = styled(Card)`
 
@@ -34,9 +34,7 @@ export default function SearchScreen({ route, navigation }) {
 
   useEffect(() => {
     setTimeout(() => {
-      setBookError(
-        "Book not found, please use a valid keyword and try again"
-      );
+      setBookError("Book not found, please use a valid keyword and try again");
     }, 2800);
   }, []);
 
@@ -53,7 +51,13 @@ export default function SearchScreen({ route, navigation }) {
           : ""
       }
       ${search.selectedCriteria === "isbn" ? `isbn:${search.searchQuery}&` : ""}
-      key=${GOOGLE_API_KEY}`
+      key=${GOOGLE_API_KEY}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     )
       .then((res) => res.json())
       .then((res) => {
@@ -113,7 +117,7 @@ export default function SearchScreen({ route, navigation }) {
                 alignItems: "center",
               }}
             >
-                <Text variant="label_center">{bookError}</Text>
+              <Text variant="label_center">{bookError}</Text>
             </View>
           </>
         )}

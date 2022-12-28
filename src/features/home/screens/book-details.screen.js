@@ -97,7 +97,12 @@ export default function BookDetails({ route, navigation }) {
     // console.log(route.params.isbn);
     const isbn = route.params.isbn;
     fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=${GOOGLE_API_KEY}`
+      `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=${GOOGLE_API_KEY}` , {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
     )
       .then((res) => res.json())
       .then((res) => {
